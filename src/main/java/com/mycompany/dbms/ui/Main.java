@@ -611,7 +611,6 @@ public class Main extends javax.swing.JFrame {
         // TODO add your handling code here:
        if(!NameTable.getText().isEmpty()){
             Table T = new Table(NameTable.getText(),String.valueOf(Registros.getSelectedItem()),TableRegistres,Registros.getSelectedIndex());
-            System.out.println("VALOR DEL INDEX: " + T.getIndexPKey());
             if(!Tree.Add(T))JOptionPane.showMessageDialog(this, "Ya existe una tabla con el nombre: " + NameTable.getText(), "Error", HEIGHT);
             else{
                 TableRegistres = new SimpleList();
@@ -766,7 +765,6 @@ public class Main extends javax.swing.JFrame {
                 Input tmp = (Input) Datos.Search(SearchValue.getText());
                 if(tmp!= null){
                     for (int i = 0; i <tmp.getData().length; i++) {
-                        System.out.println("Agregando: " + tmp.getData()[i]);
                         Datos1[i] = tmp.getData()[i];
                     }
                     n2.addRow(Datos1);

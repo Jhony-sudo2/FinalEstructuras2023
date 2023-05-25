@@ -55,10 +55,14 @@ public class Xml {
                         }else if(Tag2.equals("relacion")){
                             isRegister = 1;
                         }else if(isRegister == 0){
+                            Tag2 = DeleteSpaces(Tag2);
+                            Content = DeleteSpaces(Content);
                             Register n = new Register(Tag2,Content);
                             Records.Add(new Node(n));
                         }
                         if(i == nList.getLength() - 1){
+                            Name =DeleteSpaces(Name);
+                            PKey = DeleteSpaces(PKey);
                             T = new Table(Name,PKey,Records);
                             if(!Tree.Add(T)) Message += "\nYa existe una tabla con el nombre: " + Name;
                             else modeloTabla.addElement(Name);
@@ -66,6 +70,8 @@ public class Xml {
                             T = null;
                         }
                     }else if(!Tag.equals("estructuras") & i !=1){
+                        Name = DeleteSpaces(Name);
+                        PKey = DeleteSpaces(PKey);
                         T = new Table(Name,PKey,Records);
                         if(!Tree.Add(T)) Message += "\nYa existe una tabla con el nombre: " + Name;
                         else modeloTabla.addElement(Name);
@@ -91,6 +97,7 @@ public class Xml {
                             if(i%2 != 0) T = (Table) Tree.Search(Tag2);
                             else{
                                 Records = T.getRecords();
+                                DeleteSpaces(Content);
                                 System.out.println("Eliminando: " + Content);
                                 Records.Delete(Content);
                             }
@@ -109,14 +116,12 @@ public class Xml {
                             String Tag2 = element.getTagName();
                             String Content = element.getTextContent();
                             if(Content.contains("\n")) {
-                                System.out.println("TABLA: " + Tag2);
                                 if(i!=1) T.Add(Data);
                                 T = (Table) Tree.Search(element.getTagName());
                                 Data = new Input(T.getNumberColumns(),T.getIndexPKey());
                                 x = 0;
                             }else{
-                                System.out.println("Tag name: " + Tag2);
-                                System.out.println("Content : " + Content);
+                                Content = DeleteSpaces(Content);
                                 Data.getData()[x] = Content;
                                 x++;
                             }
@@ -131,6 +136,11 @@ public class Xml {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    
+    public static String DeleteSpaces(String Input){
+        String tmp = Input.replaceAll("\\s+", "");
+        return tmp;
     }
 }
 
